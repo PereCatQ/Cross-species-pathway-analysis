@@ -1,1 +1,1 @@
-# Cross-species-pathway-analysis
+# Cross species pathway analysis
