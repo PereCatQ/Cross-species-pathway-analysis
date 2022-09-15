@@ -36,7 +36,10 @@ wp <- separate(data = wp, col = pathway, into = c("name", "version", "id", "spec
 #######################################################################
 # TODO: replace with all differently active pathways (read in from file)
 #######################################################################
-pathways <- c("WP5049","WP384", "WP5192", "WP3844", "WP268","WP2526", "WP4874", "WP4357" )
+pathways2<-read.table("HumanVRabbit_SheepVRabbit.txt", sep = "\t", header = T)
+pathways<-pathways2[,c(1)]
+#pathways <- c("WP5049","WP384", "WP5192", "WP3844", "WP268","WP2526", "WP4874", "WP4357" )
+
 wp.filt <- wp[wp$id %in% pathways,]
 
 jaccard <- matrix(ncol=length(pathways), nrow=length(pathways))
