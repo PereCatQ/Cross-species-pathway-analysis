@@ -1,3 +1,9 @@
 code/count-data
 code/data/homology-mapping.tsv
 code/data/normalized-data.tsv
+code/data/pathway-analysis.tsv
+code/data/results_pathway_analysis.tsv
+code/data/results*
+code/results*
+code/wikipathways*
+code/data/selected-pathways.tsv

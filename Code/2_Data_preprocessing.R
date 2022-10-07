@@ -70,7 +70,7 @@ rabbit.filt <- rabbit.split[rabbit.split$X_3 == "ProteinCoding",]
 rabbit.filt <- rabbit.filt[,c(1,2,4,5,6,7,8)]
 
 #----------------------------------------
-# Prepare rabbit data
+# Prepare sheep data
 #----------------------------------------
 
 sheep <- read.table("count-data/sheep/MER-PC-b003_total.ReadCounts.tsv", header=TRUE, sep="\t")
@@ -101,6 +101,7 @@ combined.data.final <- combined.data[,c(1:7,10:14,17:21)]
 
 # genes to measured in all species are dropped
 combined.data.final <- combined.data.final%>% tidyr::drop_na()
+combined.data.final <- unique(combined.data.final)
 
 #----------------------------------------
 # Data normalization (quantile normalization)
