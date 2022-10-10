@@ -148,6 +148,18 @@ write.table(results.total, "data/pathway-analysis.tsv", sep = "\t", quote = F, r
 # Pathway overlap analysis
 #----------------------------------------------------
 
+png('figures/volcano_HR.png', width = 2300, height = 2000, res = 300)
+EnhancedVolcano(results.total, lab = "", x = "Effect_Human_Rabbit", y = "Pval_Human_Rabbit", pCutoff = 0.05, FCcutoff = 1, xlab = "effect size", ylab = bquote(~-log[10] ~ "p-value"),legendLabels = c("NS", "effect size", "p-value", "p-value and effect size"), caption = "", subtitle="Volcano plot pathway activity effect size (Human vs Rabbit)", title="", titleLabSize = 0, captionLabSize = 0, xlim=c(-5,5), ylim= c(0,25))
+dev.off()
+
+png('figures/volcano_SR.png', width = 2300, height = 2000, res = 300)
+EnhancedVolcano(results.total, lab = "", x = "Effect_Sheep_Rabbit", y = "Pval_Sheep_Rabbit", pCutoff = 0.05, FCcutoff = 1, xlab = "effect size", ylab = bquote(~-log[10] ~ "p-value"),legendLabels = c("NS", "effect size", "p-value", "p-value and effect size"), caption = "", subtitle="Volcano plot pathway activity effect size (Sheep vs Rabbit)", title="", titleLabSize = 0, captionLabSize = 0, xlim=c(-5,5), ylim= c(0,25))
+dev.off()
+
+png('figures/volcano_HS.png', width = 2300, height = 2000, res=300)
+EnhancedVolcano(results.total, lab = "", x = "Effect_Human_Sheep", y = "Pval_Human_Sheep", pCutoff = 0.05, FCcutoff = 1, xlab = "effect size", ylab = bquote(~-log[10] ~ "p-value"),legendLabels = c("NS", "effect size", "p-value", "p-value and effect size"), caption = "", subtitle="Volcano plot pathway activity effect size (Human vs Sheep)", title="", titleLabSize = 0, captionLabSize = 0, xlim=c(-5,5), ylim= c(0,25))
+dev.off()
+
 sign.pwy.Human_Rabbit <- subset(results.total, Pval_Human_Rabbit < 0.05 & abs(Effect_Human_Rabbit) > 1)
 sign.pwy.Sheep_Rabbit <- subset(results.total, Pval_Sheep_Rabbit < 0.05 & abs(Effect_Sheep_Rabbit) > 1)
 sign.pwy.Human_Sheep <- subset(results.total, Pval_Human_Sheep < 0.05 & abs(Effect_Human_Sheep) > 1)
@@ -157,9 +169,12 @@ ggvenn(pathways, stroke_size = 1, fill_color = c("#0073C2FF", "#EFC000FF", "#868
 
 selected.pwys <- subset(sign.pwy.Human_Rabbit, Pathway %in% sign.pwy.Sheep_Rabbit$Pathway)
 rownames(selected.pwys) <- selected.pwys$name
-pheatmap(selected.pwys[,c(2,4)], color = viridisLite::viridis(256,option="D"),cluster_rows = T ,cluster_cols = F, scale="none", show_rownames = T )
-write.table(selected.pwys, "data/selected-pathways.tsv", row.names = FALSE, col.names = TRUE, sep = "\t", quote = FALSE)
 
-EnhancedVolcano(results.total, lab = "", x = "Effect_Human_Rabbit", y = "Pval_Human_Rabbit", pCutoff = 0.05, FCcutoff = 1)
-EnhancedVolcano(results.total, lab = "", x = "Effect_Sheep_Rabbit", y = "Pval_Sheep_Rabbit", pCutoff = 0.05, FCcutoff = 1)
-EnhancedVolcano(results.total, lab = "", x = "Effect_Human_Sheep", y = "Pval_Human_Sheep", pCutoff = 0.05, FCcutoff = 1)
+data.heatmap <- selected.pwys[,c(2,4)]
+colnames(data.heatmap) <- c("Human vs Rabbit", "Sheep vs Rabbit")
+
+png('figures/heatmap-pathways.png', width = 2500, height = 3800, res=300)
+pheatmap(data.heatmap, color = viridisLite::viridis(256,option="D"),cluster_rows = T ,cluster_cols = F, scale="none", show_rownames = T, angle_col = 315,fontsize_col = 16, fontsize_row = 10)
+dev.off()
+
+write.table(selected.pwys, "data/selected-pathways.tsv", row.names = FALSE, col.names = TRUE, sep = "\t", quote = FALSE)

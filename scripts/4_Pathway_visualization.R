@@ -12,6 +12,7 @@ RCy3::cytoscapePing()
 
 DataWithAverages <- read.delim("DataWithAverages.txt")
 DataWithAverages <- tibble::rownames_to_column(DataWithAverages, "Ensembl")
+# Notch signaling & TFG beta
 pathways <- c("WP560","WP2884", "WP4357", "WP3", "WP268","WP4874")
 
 for(p in pathways) {
