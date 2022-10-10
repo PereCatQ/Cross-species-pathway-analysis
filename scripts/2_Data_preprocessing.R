@@ -149,6 +149,24 @@ plot(NA, xlim=range(sapply(data.norm.dens, "[", "x")), ylim=range(sapply(data.no
 mapply(lines, data.norm.dens, col=1:length(data.norm.dens))
 legend("topright", legend=names(data.norm.dens), fill=1:length(data.norm.dens), cex = 0.7, title="Density plot (after norm)")
 
+
+## TODO: fix x+y labels, fix xlim+ylim, fix title 
+## TODO: add export high quality png
+data.norm.dens.human <- apply(combined.data.norm[,3:7], 2, density)
+plot(NA, xlim=range(sapply(data.norm.dens.human, "[", "x")), ylim=range(sapply(data.norm.dens.human, "[", "y")))
+mapply(lines, data.norm.dens.human, col=1:length(data.norm.dens.human))
+legend("topright", legend=names(data.norm.dens.human), fill=1:length(data.norm.dens.human), cex = 0.7, title="Density plot (human)")
+
+data.norm.dens.sheep <- apply(combined.data.norm[,13:17], 2, density)
+plot(NA, xlim=range(sapply(data.norm.dens.sheep, "[", "x")), ylim=range(sapply(data.norm.dens.sheep, "[", "y")))
+mapply(lines, data.norm.dens.sheep, col=1:length(data.norm.dens.sheep))
+legend("topright", legend=names(data.norm.dens.sheep), fill=1:length(data.norm.dens.sheep), cex = 0.7, title="Density plot (sheep)")
+
+data.norm.dens.rabbit <- apply(combined.data.norm[,8:12], 2, density)
+plot(NA, xlim=range(sapply(data.norm.dens.rabbit, "[", "x")), ylim=range(sapply(data.norm.dens.rabbit, "[", "y")))
+mapply(lines, data.norm.dens.rabbit, col=1:length(data.norm.dens.rabbit))
+legend("topright", legend=names(data.norm.dens.rabbit), fill=1:length(data.norm.dens.rabbit), cex = 0.7, title="Density plot (rabbit)")
+
 # boxplot
 melt.dat.norm <-data.frame(reshape2::melt(combined.data.norm[,c(1,3:17)], id.vars = "ENSGID"))
 ggplot(melt.dat.norm, aes(x = as.factor(variable), y = value)) + geom_boxplot(aes(fill = variable), position = position_dodge(0.9)) + theme_bw()
